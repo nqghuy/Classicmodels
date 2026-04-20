@@ -20,38 +20,6 @@ Mở trình duyệt:
 http://localhost:8000
 ```
 
-Để bật chatbot Gemini, chạy server với biến môi trường:
-
-```bash
-GEMINI_API_KEY='your_gemini_api_key' python3 server.py
-```
-
-Hoặc tạo file `.env` local:
-
-```bash
-cp .env.example .env
-```
-
-Sau đó sửa `GEMINI_API_KEY` trong `.env` và chạy:
-
-```bash
-python3 server.py
-```
-
-Không đưa API key vào `index.html` hoặc `app.js` vì frontend có thể bị xem mã nguồn trên trình duyệt. File `.env` đã được thêm vào `.gitignore`.
-
-Nếu cổng `8000` bận:
-
-```bash
-PORT=8020 python3 server.py
-```
-
-Mở:
-
-```text
-http://localhost:8020
-```
-
 ## RESTful API
 
 ### Metadata
