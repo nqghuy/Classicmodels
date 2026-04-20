@@ -170,4 +170,3 @@ Endpoint này lấy context thống kê từ REST API/SQLite, ghép vào prompt 
 - `styles.css`: giao diện responsive.
 - `mysqlsampledatabase.sql`: dữ liệu ClassicModels gốc.
 - `classicmodels.sqlite`: database tự sinh khi chạy server.
-# Classicmodels

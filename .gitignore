@@ -1,0 +1,6 @@
+.env
+.env.example
+classicmodels.sqlite
+__pycache__/
+*.pyc
+.codex

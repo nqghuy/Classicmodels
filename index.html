@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ClassicModels Analytics</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <header class="hero">
+      <nav class="topbar">
+        <div class="brand">
+          <span class="brand-mark">CM</span>
+          <span>ClassicModels Intelligence</span>
+        </div>
+        <div class="nav-links">
+          <a href="#dashboard">Statistics</a>
+          <a href="#reports">Reports</a>
+          <a href="#search">Search</a>
+          <a href="#pivot">Pivot</a>
+          <a href="#chatbot">Chatbot</a>
+        </div>
+      </nav>
+
+      <section class="hero-grid">
+        <div>
+          <p class="eyebrow">Sales, orders, customers, revenue</p>
+          <h1>Business dashboard for the ClassicModels database.</h1>
+          <p class="hero-copy">
+            Explore revenue trends, customer value, order status, product-line
+            performance, and pivot reports directly from the SQL dump in this folder.
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#dashboard">View dashboard</a>
+            <a class="button ghost" href="#search">Search records</a>
+          </div>
+        </div>
+        <aside class="hero-card">
+          <span class="status-dot"></span>
+          <p>Data source</p>
+          <strong id="data-source">Loading REST API...</strong>
+          <small id="data-range">Preparing SQLite database</small>
+        </aside>
+      </section>
+    </header>
+
+    <main>
+      <section id="dashboard" class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Statistics</p>
+          <h2>Executive Overview</h2>
+        </div>
+        <div id="stat-cards" class="stat-grid"></div>
+      </section>
+
+      <section class="section visual-grid">
+        <article class="panel large">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Revenue trend</p>
+              <h3>Monthly Order Revenue</h3>
+            </div>
+            <select id="trend-year" aria-label="Filter trend by year">
+              <option value="all">All years</option>
+            </select>
+          </div>
+          <canvas id="revenue-chart" height="260"></canvas>
+        </article>
+
+        <article class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Order health</p>
+              <h3>Status Mix</h3>
+            </div>
+          </div>
+          <canvas id="status-chart" height="260"></canvas>
+        </article>
+
+        <article class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Portfolio</p>
+              <h3>Revenue by Product Line</h3>
+            </div>
+          </div>
+          <canvas id="productline-chart" height="260"></canvas>
+        </article>
+      </section>
+
+      <section id="reports" class="section split-grid">
+        <article class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Report</p>
+              <h3>Top Customers by Revenue</h3>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Customer</th>
+                  <th>Country</th>
+                  <th>Orders</th>
+                  <th>Revenue</th>
+                </tr>
+              </thead>
+              <tbody id="top-customers"></tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Report</p>
+              <h3>Recent Orders</h3>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Order</th>
+                  <th>Date</th>
+                  <th>Customer</th>
+                  <th>Status</th>
+                  <th>Revenue</th>
+                </tr>
+              </thead>
+              <tbody id="recent-orders"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section id="search" class="section">
+        <div class="section-heading inline">
+          <div>
+            <p class="eyebrow">Search</p>
+            <h2>Customers, Orders, Revenue</h2>
+          </div>
+          <div class="search-controls">
+            <input id="search-box" type="search" placeholder="Search name, country, city, order number, status...">
+            <select id="country-filter" aria-label="Filter by country">
+              <option value="all">All countries</option>
+            </select>
+            <select id="status-filter" aria-label="Filter by order status">
+              <option value="all">All statuses</option>
+            </select>
+          </div>
+        </div>
+        <article class="panel">
+          <div class="table-wrap search-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Order</th>
+                  <th>Date</th>
+                  <th>Customer</th>
+                  <th>Location</th>
+                  <th>Status</th>
+                  <th>Items</th>
+                  <th>Revenue</th>
+                </tr>
+              </thead>
+              <tbody id="search-results"></tbody>
+            </table>
+          </div>
+          <p id="search-count" class="muted"></p>
+        </article>
+      </section>
+
+      <section id="pivot" class="section">
+        <div class="section-heading inline">
+          <div>
+            <p class="eyebrow">Pivot table</p>
+            <h2>Build a Revenue Report</h2>
+          </div>
+          <div class="search-controls compact">
+            <label>
+              Rows
+              <select id="pivot-row">
+                <option value="country">Country</option>
+                <option value="customer">Customer</option>
+                <option value="status">Order Status</option>
+                <option value="productLine">Product Line</option>
+                <option value="product">Product</option>
+                <option value="year">Year</option>
+                <option value="month">Month</option>
+              </select>
+            </label>
+            <label>
+              Columns
+              <select id="pivot-col">
+                <option value="year">Year</option>
+                <option value="month">Month</option>
+                <option value="country">Country</option>
+                <option value="status">Order Status</option>
+                <option value="productLine">Product Line</option>
+                <option value="product">Product</option>
+              </select>
+            </label>
+            <label>
+              Metric
+              <select id="pivot-metric">
+                <option value="revenue">Revenue</option>
+                <option value="orders">Orders</option>
+                <option value="quantity">Quantity</option>
+                <option value="customers">Customers</option>
+              </select>
+            </label>
+          </div>
+        </div>
+        <article class="panel">
+          <div id="pivot-table" class="table-wrap pivot-wrap"></div>
+        </article>
+      </section>
+
+      <section id="chatbot" class="section">
+        <div class="section-heading">
+          <p class="eyebrow">Gemini chatbot</p>
+          <h2>Ask About ClassicModels</h2>
+        </div>
+        <article class="panel chatbot-panel">
+          <div id="chat-messages" class="chat-messages" aria-live="polite">
+            <div class="chat-message assistant">
+              Ask about customers, orders, revenue, product lines, status mix, or trends. The chatbot uses the REST API context and Gemini.
+            </div>
+          </div>
+          <form id="chat-form" class="chat-form">
+            <input id="chat-input" type="text" placeholder="Example: Which product line has the highest revenue?" autocomplete="off">
+            <button class="button primary" type="submit">Send</button>
+          </form>
+          <p class="muted">Server requires <code>GEMINI_API_KEY</code>. The key is never sent to the browser.</p>
+        </article>
+      </section>
+    </main>
+
+    <footer>
+      <span>ClassicModels Analytics</span>
+      <span>SQLite + lightweight ORM + RESTful API powered by the local SQL dump.</span>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
